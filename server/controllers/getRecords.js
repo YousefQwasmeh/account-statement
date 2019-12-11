@@ -8,4 +8,3 @@ const getRecords = (req, res) => {
     );
 };
 module.exports = getRecords;
-git commit -m "files react with 2 component is temp to try and cosole log date from api
