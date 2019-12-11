@@ -1,13 +1,10 @@
 const dbConnection = require("../dbConnection");
 
-const getPassword = (email, cb) => {
-  dbConnection.query("SELECT password FROM users where email=$1", [email], (err, res) => {
-    if (err) {
-      cb(err);
-    } else {
-      cb(null, res.rows[0]);
-    }
-  });
+const getPassword = email => {
+  dbConnection
+    .query("SELECT password FROM users where email=$1", [email])
+    .then(res => res.rows)
+    .catch(err => console.log(err, "getPassword err in queries"));
 };
 
-module.exports = { getPassword };
+module.exports = getPassword;
