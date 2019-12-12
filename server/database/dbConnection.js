@@ -1,13 +1,13 @@
-const { Pool } = require("pg")
-require("env2")("./config.env")
+const { Pool } = require("pg");
+require("env2")("./config.env");
 
-const connectionString = process.env.DATABASE_URL
+const connectionString = process.env.DATABASE_URL2;
 
 if (!connectionString) {
-  throw new Error("set DATABASE_URL")
+  throw new Error("set DATABASE_URL");
 }
 
 module.exports = new Pool({
   connectionString,
   ssl: !connectionString.includes("localhost")
-})
+});
