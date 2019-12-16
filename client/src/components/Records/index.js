@@ -79,7 +79,7 @@ class Records extends React.Component {
         let info = {};
         if (data[0]) info = { name: data[0].customer_name, total: a };
 
-        this.setState({ records, info });
+        this.setState({ records, info, customerName: "" });
       })
       .catch(err => console.log(err));
   };
@@ -122,11 +122,11 @@ class Records extends React.Component {
           {predictionNames.length !== 0 &&
           predictionNames.length === 1 &&
           predictionNames[0].props.children ===
-            this.state.customerName ? null : (
+            this.state.customerName ? null : this.state.customerName !== "" ? (
             <ul style={{ maxHeight: "160px", "overflow-y": "scroll" }}>
               {predictionNames}
             </ul>
-          )}
+          ) : null}
 
           <button
             onClick={event => {
