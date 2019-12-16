@@ -88,7 +88,7 @@ class Records extends React.Component {
   };
   componentDidMount() {
     axios
-      .get("http://localhost:4000/api/getAllCustomers")
+      .get("https://you97sef.herokuapp.com/api/getAllCustomers")
       .then(({ data }) => {
         this.setState({
           customersNames: data.map(c => <li onClick={this.nameList}>{c}</li>)
@@ -119,7 +119,8 @@ class Records extends React.Component {
             value={this.state.customerName}
           />
 
-          {predictionNames.length === 1 &&
+          {predictionNames.length !== 0 &&
+          predictionNames.length === 1 &&
           predictionNames[0].props.children ===
             this.state.customerName ? null : (
             <ul style={{ maxHeight: "160px", "overflow-y": "scroll" }}>
