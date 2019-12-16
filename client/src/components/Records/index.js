@@ -1,14 +1,21 @@
 import React from "react";
 import axios from "axios";
+import "./style.css";
 class Records extends React.Component {
   state = {
     customerName: "",
     records: [],
-    fromDate: "2019-1-1",
-    toDate: "2019-05-05",
+    fromDate: "2019-01-01",
+    toDate:
+      new Date().getFullYear() +
+      "-" +
+      (new Date().getMonth() + 1) +
+      "-" +
+      new Date().getDate(),
     info: { name: "Loading", total: "loading" },
     preTotal: null,
-    endDate: null
+    endDate: null,
+    customersNames: []
   };
 
   aa = () => this.state.records.map(r => r);
@@ -76,67 +83,113 @@ class Records extends React.Component {
       })
       .catch(err => console.log(err));
   };
+  nameList = ({ target }) => {
+    this.setState({ customerName: target.innerText });
+  };
+  componentDidMount() {
+    axios
+      .get("http://localhost:4000/api/getAllCustomers")
+      .then(({ data }) => {
+        this.setState({
+          customersNames: data.map(c => <li onClick={this.nameList}>{c}</li>)
+        });
+      })
+      .catch(err => console.log(err, 566666666));
+  }
+  prediction = name => {
+    try {
+      return this.state.customersNames.filter(c =>
+        c.props.children.includes(name)
+      );
+    } catch (e) {
+      return null;
+    }
+  };
   render() {
-    // console.log(this.state.records);
-
+    const predictionNames = this.prediction(this.state.customerName);
     return (
       <div>
-        <input
-          onChange={({ target }) => {
-            // console.log(target.value, "88888888");
-            this.setState({ customerName: target.value });
-          }}
-          type='text'
-          placeholder='اسم الزبون'
-        />
-        <button
-          onClick={() => {
-            this.search();
-          }}
-        >
-          كشف الحساب
-        </button>
+        <form>
+          <input
+            onChange={({ target }) => {
+              this.setState({ customerName: target.value });
+            }}
+            type='text'
+            placeholder='اسم الزبون'
+            value={this.state.customerName}
+          />
+
+          {predictionNames.length === 1 &&
+          predictionNames[0].props.children ===
+            this.state.customerName ? null : (
+            <ul style={{ maxHeight: "160px", "overflow-y": "scroll" }}>
+              {predictionNames}
+            </ul>
+          )}
+
+          <button
+            onClick={event => {
+              event.preventDefault();
+              this.search();
+            }}
+          >
+            كشف الحساب
+          </button>
+          <br />
+          <br />
+          <span>From: </span>
+          <input
+            onChange={({ target }) => {
+              this.setState({ fromDate: target.value });
+            }}
+            type='date'
+            name='fromDate'
+            value={this.state.fromDate}
+          ></input>
+          <br />
+          <br />
+          <span>To: &nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <input
+            onChange={({ target }) => {
+              this.setState({ toDate: target.value });
+            }}
+            type='date'
+            value={this.state.toDate}
+            name='toDate'
+          ></input>
+        </form>
         <br />
-        <input
-          onChange={({ target }) => {
-            this.setState({ fromDate: target.value });
-            console.log(target.value, "frommmmmmmmmmmmmm");
-          }}
-          type='date'
-          name='fromDate'
-        ></input>
-        :الى
-        <input
-          onChange={({ target }) => {
-            this.setState({ toDate: target.value });
-            console.log(target.value, "nnnnnnn");
-          }}
-          style={{ marginLeft: "30px" }}
-          type='date'
-          name='toDate'
-        ></input>
-        من:
-        <br />
-        الاسم: {this.state.info.name}
-        <br />
-        الرصيد الكلي حتى تاريخ {this.state.endDate}: {this.state.info.total}
+        {this.state.info.name === "Loading" ? null : (
+          <div className='info'>
+            الاسم: {this.state.info.name}
+            <br />
+            الرصيد الكلي حتى تاريخ {this.state.endDate}:
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            {this.state.info.total} شيكل
+          </div>
+        )}
         <table style={{ width: "100%" }}>
-          <tr>
-            <th>البيان</th>
-            <th>التاريخ</th>
-            <th>الدفع</th>
-            <th>المبلغ</th>
-            <th>الرصيد</th>
-            {/* <th>الاسم</th> */}
-          </tr>
-          <tr>
-            <th style={{ border: "2px solid" }}>رصيد سابق</th>
-            <th style={{ border: "2px solid" }}>{this.state.fromDate}</th>
-            <th style={{ border: "2px solid" }}></th>
-            <th style={{ border: "2px solid" }}></th>
-            <th style={{ border: "2px solid" }}>{this.state.preTotal}</th>
-            {/* <th>{record.customer_name}</th> */}
-          </tr>
+          {this.state.info.name === "Loading" ? null : (
+            <>
+              <tr>
+                <th>البيان</th>
+                <th>التاريخ</th>
+                <th>الدفع</th>
+                <th>المبلغ</th>
+                <th>الرصيد</th>
+                {/* <th>الاسم</th> */}
+              </tr>
+              <tr>
+                <th style={{ border: "2px solid" }}>رصيد سابق</th>
+                <th style={{ border: "2px solid" }}>{this.state.fromDate}</th>
+                <th style={{ border: "2px solid" }}></th>
+                <th style={{ border: "2px solid" }}></th>
+                <th style={{ border: "2px solid" }}>{this.state.preTotal}</th>
+                {/* <th>{record.customer_name}</th> */}
+              </tr>
+            </>
+          )}
+
           {this.state.records}
         </table>
       </div>
