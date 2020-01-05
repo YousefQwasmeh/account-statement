@@ -1,13 +1,28 @@
 const getRecordsQuery = require("../database/queries/getRecords");
+const getCustomerInformationQuery = require("../database/queries/getCustomerInformation");
 const qs = require("qs");
 
 const getRecords = (req, res) => {
-  // console.log(qs.parse(req.params.customerName), "444444444");
-  console.log(req.params.customerName, "3333");
-  getRecordsQuery(req.params.customerName)
-    .then(data => res.json(data))
+  getCustomerInformationQuery(req.params.customerName)
+    .then(data => {
+      info = data;
+    })
     .catch(err =>
-      res.status(500).json({ err: "error for get Records controller" })
+      res.status(500).json({ err: "err for get Records info controller" })
+    );
+  getRecordsQuery(req.params.customerName)
+    .then(data => {
+      getCustomerInformationQuery(req.params.customerName)
+        .then(info2 => {
+          console.log(info);
+          return res.json({ data, info2: info2[0] });
+        })
+        .catch(err =>
+          res.status(500).json({ err: "err for get Records info controller" })
+        );
+    })
+    .catch(err =>
+      res.status(500).json({ err: "err for get Records controller" })
     );
 };
 module.exports = getRecords;

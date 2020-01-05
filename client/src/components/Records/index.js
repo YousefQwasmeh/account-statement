@@ -9,26 +9,30 @@ class Records extends React.Component {
     toDate:
       new Date().getFullYear() +
       "-" +
-      (new Date().getMonth() + 1) +
+      (new Date().getMonth() + 1 < 10
+        ? "0" + (new Date().getMonth() + 1)
+        : new Date().getMonth() + 1) +
       "-" +
-      new Date().getDate(),
-    info: { name: "Loading", total: "loading" },
+      (new Date().getDate() < 10
+        ? "0" + new Date().getDate()
+        : new Date().getDate()),
+    info: { name: "Loading", total: "loading", phone: "", description: "" },
     preTotal: null,
     endDate: null,
-    customersNames: []
+    customersNames: [],
+    editNote: "hidden"
   };
 
   aa = () => this.state.records.map(r => r);
   search = () => {
-    console.log(this.state.customerName, "999999999999");
     axios
-      .get(
-        `https://you97sef.herokuapp.com/api/records/${this.state.customerName}`
-      )
-      .then(({ data }) => {
-        console.log(data);
+      .get(`/api/records/${this.state.customerName}`)
+      .then(({ data: { data, info2 } }) => {
         let a = 0;
-        this.setState({ preTotal: null });
+        this.setState({
+          info: { ...this.state.info, ...info2 },
+          preTotal: null
+        });
         const records = data.map(record => {
           const amount = record.amount >= 0 ? record.amount : "";
           const amount2 = record.amount < 0 ? record.amount : "";
@@ -71,15 +75,24 @@ class Records extends React.Component {
               <th style={{ border: "2px solid" }}>{amount2}</th>
               <th style={{ border: "2px solid" }}>{amount}</th>
               <th style={{ border: "2px solid" }}>{a}</th>
+              {/* <th style={{ border: "2px solid" }}>{record.customer_name}</th> */}
               {/* <th>{record.customer_name}</th> */}
             </tr>
           );
         });
         // if (this.state.preTotal == null) this.setState({ preTotal: a });
         let info = {};
-        if (data[0]) info = { name: data[0].customer_name, total: a };
+        if (data[0])
+          info = {
+            name: data[0].customer_name,
+            total: a
+          };
 
-        this.setState({ records, info, customerName: "" });
+        this.setState({
+          records,
+          info: { ...this.state.info, ...info },
+          customerName: ""
+        });
       })
       .catch(err => console.log(err));
   };
@@ -88,13 +101,17 @@ class Records extends React.Component {
   };
   componentDidMount() {
     axios
-      .get("https://you97sef.herokuapp.com/api/getAllCustomers")
+      .get("/api/getAllCustomers")
       .then(({ data }) => {
         this.setState({
-          customersNames: data.map(c => <li onClick={this.nameList}>{c}</li>)
+          customersNames: data.map((c, i) => (
+            <li key={"li" + i} onClick={this.nameList}>
+              {c}
+            </li>
+          ))
         });
       })
-      .catch(err => console.log(err, 566666666));
+      .catch(err => console.log(err, "566666666"));
   }
   prediction = name => {
     try {
@@ -119,11 +136,12 @@ class Records extends React.Component {
             value={this.state.customerName}
           />
 
-          {predictionNames.length !== 0 &&
+          {predictionNames &&
+          predictionNames.length !== 0 &&
           predictionNames.length === 1 &&
           predictionNames[0].props.children ===
             this.state.customerName ? null : this.state.customerName !== "" ? (
-            <ul style={{ maxHeight: "160px", "overflow-y": "scroll" }}>
+            <ul key='list' style={{ maxHeight: "160px", overflowY: "scroll" }}>
               {predictionNames}
             </ul>
           ) : null}
@@ -167,31 +185,83 @@ class Records extends React.Component {
             الرصيد الكلي حتى تاريخ {this.state.endDate}:
             &nbsp;&nbsp;&nbsp;&nbsp;
             {this.state.info.total} شيكل
+            <br />
+            تلفون:{" "}
+            <a href='tel:`${this.state.info.phone}`'>{this.state.info.phone}</a>
+            <br />
+            ملاحظات:{this.state.info.description}
+            <br />
+            <textarea
+              id='note'
+              onChange={({ target }) => {
+                this.setState({
+                  info: { ...this.state.info, description: target.value }
+                });
+              }}
+              value={this.state.info.description}
+              style={{ visibility: this.state.editNote, width: "80%" }}
+              // type='textarea'
+            ></textarea>
+            <br />
+            <button
+              onClick={({ target }) => {
+                if (this.state.editNote === "unset") {
+                  console.log("saved");
+                  axios
+                    .post("/api/setNote", { ...this.state.info })
+                    .then(response => {
+                      if (response.status === 200) console.log("done");
+                      else console.log("err");
+                    })
+                    .catch(error => {
+                      console.log(error);
+                    });
+                  target.innerText = "تعديل الملاحظات";
+                } else {
+                  target.innerText = "حفظ التعديلات";
+                }
+
+                // console.log(target.innerText, "00000001");
+                document.getElementById(
+                  "note"
+                ).style.visibility = this.state.editNote;
+                this.setState({
+                  editNote:
+                    this.state.editNote === "hidden" ? "unset" : "hidden"
+                });
+              }}
+            >
+              تعديل الملاحظات
+            </button>
           </div>
         )}
         <table style={{ width: "100%" }}>
           {this.state.info.name === "Loading" ? null : (
             <>
-              <tr>
-                <th>البيان</th>
-                <th>التاريخ</th>
-                <th>الدفع</th>
-                <th>المبلغ</th>
-                <th>الرصيد</th>
-                {/* <th>الاسم</th> */}
-              </tr>
-              <tr>
-                <th style={{ border: "2px solid" }}>رصيد سابق</th>
-                <th style={{ border: "2px solid" }}>{this.state.fromDate}</th>
-                <th style={{ border: "2px solid" }}></th>
-                <th style={{ border: "2px solid" }}></th>
-                <th style={{ border: "2px solid" }}>{this.state.preTotal}</th>
-                {/* <th>{record.customer_name}</th> */}
-              </tr>
+              <thead>
+                <tr>
+                  <th>البيان</th>
+                  <th>التاريخ</th>
+                  <th>الدفع</th>
+                  <th>المبلغ</th>
+                  <th>الرصيد</th>
+                  {/* <th>الاسم</th> */}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th style={{ border: "2px solid" }}>رصيد سابق</th>
+                  <th style={{ border: "2px solid" }}>{this.state.fromDate}</th>
+                  <th style={{ border: "2px solid" }}></th>
+                  <th style={{ border: "2px solid" }}></th>
+                  <th style={{ border: "2px solid" }}>{this.state.preTotal}</th>
+                  {/* <th style={{ border: "2px solid" }}>{"name"}</th> */}
+                  {/* <th>{record.customer_name}</th> */}
+                </tr>
+              </tbody>
             </>
           )}
-
-          {this.state.records}
+          <tbody>{this.state.records}</tbody>
         </table>
       </div>
     );
