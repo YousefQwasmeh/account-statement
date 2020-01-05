@@ -187,7 +187,7 @@ class Records extends React.Component {
             {this.state.info.total} شيكل
             <br />
             تلفون:{" "}
-            <a href='tel:`${this.state.info.phone}`'>{this.state.info.phone}</a>
+            <a href={`tel:${this.state.info.phone}`}>{this.state.info.phone}</a>
             <br />
             ملاحظات:{this.state.info.description}
             <br />
