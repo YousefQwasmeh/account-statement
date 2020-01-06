@@ -20,6 +20,7 @@ create table record
   date DATE,
   amount FLOAT,
   description text,
+  branch int2 not NULL,
   customer_name varchar(100),
   FOREIGN KEY
   (customer_name) REFERENCES customer
