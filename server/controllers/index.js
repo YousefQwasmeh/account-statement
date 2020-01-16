@@ -1,7 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const getRecords = require("./getRecords");
+const getAllCustomers = require("./getAllCustomers");
+const updateNote = require("./updateNote");
 
-router.get("/records", getRecords);
+router.get("/records/:customerName/:branch", getRecords);
+router.get("/records/:customerName", getRecords);
+router.get("/getAllCustomers", getAllCustomers);
+router.post("/setNote", updateNote);
 
 module.exports = router;
