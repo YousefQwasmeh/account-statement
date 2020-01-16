@@ -20,17 +20,18 @@ class Records extends React.Component {
     preTotal: null,
     endDate: null,
     customersNames: [],
-    editNote: "hidden"
+    editNote: "hidden",
+    branch: 1
   };
 
   aa = () => this.state.records.map(r => r);
   search = () => {
     axios
-      .get(`/api/records/${this.state.customerName}`)
+      .get(`/api/records/${this.state.customerName}/${this.state.branch}`)
       .then(({ data: { data, info2 } }) => {
         let a = 0;
         this.setState({
-          info: { ...this.state.info, ...info2 },
+          info: { description: "", ...this.state.info, ...info2 },
           preTotal: null
         });
         const records = data.map(record => {
@@ -45,11 +46,10 @@ class Records extends React.Component {
           const datee = record.date.split("T")[0].split("-");
           a += record.amount;
           if (
-            Number(new Date(record.date.split("T")[0])) >
-            Number(new Date(this.state.toDate))
+            Number(new Date(record.date.split("T")[0])) <
+            Number(new Date(this.state.fromDate))
           )
-            if (this.state.preTotal == null)
-              this.setState({ preTotal: a - record.amount });
+            this.setState({ preTotal: a });
           if (
             Number(new Date(record.date.split("T")[0])) >
               Number(new Date(this.state.toDate)) ||
@@ -165,6 +165,15 @@ class Records extends React.Component {
             name='fromDate'
             value={this.state.fromDate}
           ></input>
+          <input
+            style={{ marginLeft: "5%", width: "90px" }}
+            onChange={({ target }) => {
+              this.setState({ branch: target.value });
+            }}
+            type='Number'
+            placeholder='branch No'
+            value={this.state.branch}
+          />
           <br />
           <br />
           <span>To: &nbsp;&nbsp;&nbsp;&nbsp;</span>

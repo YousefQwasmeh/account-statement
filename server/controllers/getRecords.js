@@ -10,7 +10,7 @@ const getRecords = (req, res) => {
     .catch(err =>
       res.status(500).json({ err: "err for get Records info controller" })
     );
-  getRecordsQuery(req.params.customerName)
+  getRecordsQuery(req.params.customerName, req.params.branch)
     .then(data => {
       getCustomerInformationQuery(req.params.customerName)
         .then(info2 => {
