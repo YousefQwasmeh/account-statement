@@ -1,6 +1,6 @@
 BEGIN;
 
-  drop table if exists customer,record, customer_account
+  drop table if exists customer, record, customer_account
   CASCADE;
 
 create table customer
@@ -11,7 +11,8 @@ create table customer
   password text ,
   img text,
   phone varchar(14),
-  type int
+  type int,
+  note text
 );
 
 create table record

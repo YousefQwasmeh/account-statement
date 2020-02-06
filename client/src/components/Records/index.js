@@ -31,7 +31,7 @@ class Records extends React.Component {
       .then(({ data: { data, info2 } }) => {
         let a = 0;
         this.setState({
-          info: { description: "", ...this.state.info, ...info2 },
+          info: { note: "", ...this.state.info, ...info2 },
           preTotal: null
         });
         const records = data.map(record => {
@@ -68,7 +68,7 @@ class Records extends React.Component {
           // if (record.date.split("T")[0] > "2019-05-05") return null;
           return (
             <tr>
-              <th style={{ border: "2px solid" }}>{record.description}</th>
+              <th style={{ border: "2px solid" }}>{record.note}</th>
               <th style={{ border: "2px solid" }}>
                 {record.date.split("T")[0]}
               </th>
@@ -125,7 +125,7 @@ class Records extends React.Component {
   render() {
     const predictionNames = this.prediction(this.state.customerName);
     return (
-      <div>
+      <div className='recordPage'>
         <form>
           <input
             onChange={({ target }) => {
@@ -198,16 +198,16 @@ class Records extends React.Component {
             تلفون:{" "}
             <a href={`tel:${this.state.info.phone}`}>{this.state.info.phone}</a>
             <br />
-            ملاحظات:{this.state.info.description}
+            ملاحظات:{this.state.info.note}
             <br />
             <textarea
               id='note'
               onChange={({ target }) => {
                 this.setState({
-                  info: { ...this.state.info, description: target.value }
+                  info: { ...this.state.info, note: target.value }
                 });
               }}
-              value={this.state.info.description}
+              value={this.state.info.note}
               style={{ visibility: this.state.editNote, width: "80%" }}
               // type='textarea'
             ></textarea>
