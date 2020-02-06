@@ -1,7 +1,7 @@
 const { Pool } = require("pg");
 require("env2")("./config.env");
 
-const connectionString = process.env.DATABASE_URL2019;
+const connectionString = process.env.DATABASE_URL2020;
 
 if (!connectionString) {
   throw new Error("set DATABASE_URL");

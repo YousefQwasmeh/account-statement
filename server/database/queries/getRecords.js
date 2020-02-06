@@ -1,5 +1,5 @@
 const dbConnection = require("../dbConnection");
-const dbConnection2020 = require("../dbConnection2020");
+const dbConnection2019 = require("../dbConnection2019");
 const getRecords = (customerName, branch) => {
   return dbConnection
     .query(
@@ -7,13 +7,13 @@ const getRecords = (customerName, branch) => {
       [customerName, branch || 1]
     )
     .then(res =>
-      dbConnection2020
+      dbConnection2019
         .query(
           `SELECT * FROM record where customer_name = $1 and branch = $2 ORDER BY date `,
           [customerName, branch || 1]
         )
-        .then(res2020 => res.rows.concat(res2020.rows))
-        .catch(err2020 => err2020)
+        .then(res2019 => res2019.rows.concat(res.rows))
+        .catch(err2019 => err2019)
     )
     .catch(err => err);
 };
