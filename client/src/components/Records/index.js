@@ -102,13 +102,13 @@ class Records extends React.Component {
       .get("/api/getAllCustomers")
       .then(({ data }) => {
         console.log(data[0]);
-        // this.setState({
-        //   customersNames: data.map(({ name }, i) => (
-        //     <li key={"li" + i} onClick={this.nameList}>
-        //       {name}
-        //     </li>
-        //   ))
-        // });
+        this.setState({
+          customersNames: data.map(({ name }, i) => (
+            <li key={"li" + i} onClick={this.nameList}>
+              {name}
+            </li>
+          ))
+        });
       })
       .catch(err => console.log(err));
   }
