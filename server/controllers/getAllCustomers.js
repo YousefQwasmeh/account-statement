@@ -3,13 +3,7 @@ const qs = require("qs");
 
 const getAllCustomers = (req, res) => {
   getAllCustomersQuery()
-    .then(allCustomers =>
-      res.json(
-        allCustomers.map(customer => {
-          return customer.name;
-        })
-      )
-    )
+    .then(allCustomers => res.json(allCustomers))
     .catch(err =>
       res.status(500).json({ err: "error for getAllCustomers controller" })
     );
