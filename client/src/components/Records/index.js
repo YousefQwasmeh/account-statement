@@ -39,8 +39,6 @@ class Records extends React.Component {
           const amount2 = record.amount < 0 ? record.amount : "";
           this.setState({ endDate: data[data.length - 1].date.split("T")[0] });
 
-          const toDate = this.state.toDate.split("-");
-          const datee = record.date.split("T")[0].split("-");
           a += record.amount;
           if (
             Number(new Date(record.date.split("T")[0])) <
@@ -92,10 +90,11 @@ class Records extends React.Component {
     axios
       .get("/api/getAllCustomers")
       .then(({ data }) => {
+        console.log(data[0]);
         this.setState({
-          customersNames: data.map((c, i) => (
+          customersNames: data.map(({ name }, i) => (
             <li key={"li" + i} onClick={this.nameList}>
-              {c}
+              {name}
             </li>
           )),
         });

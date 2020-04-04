@@ -1,7 +1,7 @@
 const dbConnection = require("../dbConnection");
 const getAllCustomers = () => {
   return dbConnection
-    .query("SELECT * FROM customer ")
+    .query("SELECT id,name,email,img,phone,note FROM customer ")
     .then(res => res.rows)
     .catch(err => err);
 };
