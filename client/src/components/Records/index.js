@@ -21,10 +21,10 @@ class Records extends React.Component {
     endDate: null,
     customersNames: [],
     editNote: "hidden",
-    branch: 1
+    branch: 1,
   };
 
-  aa = () => this.state.records.map(r => r);
+  aa = () => this.state.records.map((r) => r);
   search = () => {
     axios
       .get(`/api/records/${this.state.customerName}/${this.state.branch}`)
@@ -32,14 +32,11 @@ class Records extends React.Component {
         let a = 0;
         this.setState({
           info: { note: "", ...this.state.info, ...info2 },
-          preTotal: null
+          preTotal: null,
         });
-        const records = data.map(record => {
+        const records = data.map((record) => {
           const amount = record.amount >= 0 ? record.amount : "";
           const amount2 = record.amount < 0 ? record.amount : "";
-          // const aa = Date("2019-05-06");
-          // const b = Date("2019-05-05");
-          // console.log(Number(new Date("2019-01-02")));
           this.setState({ endDate: data[data.length - 1].date.split("T")[0] });
 
           const toDate = this.state.toDate.split("-");
@@ -58,14 +55,6 @@ class Records extends React.Component {
           )
             return null;
 
-          // if (datee[0] > toDate[0]) return null;
-          // else if (datee[2] > toDate[2]) return null;
-          // else if (datee[1] > toDate[1]) return null;
-          // console.log("0000000000");
-          // console.log(toDate, datee);
-          // console.log("0000000000");
-          // console.log("qqqqqqqqqqqqq");
-          // if (record.date.split("T")[0] > "2019-05-05") return null;
           return (
             <tr>
               <th style={{ border: "2px solid" }}>{record.note}</th>
@@ -85,16 +74,16 @@ class Records extends React.Component {
         if (data[0])
           info = {
             name: data[0].customer_name,
-            total: a
+            total: a,
           };
 
         this.setState({
           records,
           info: { ...this.state.info, ...info },
-          customerName: ""
+          customerName: "",
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
   nameList = ({ target }) => {
     this.setState({ customerName: target.innerText });
@@ -108,14 +97,14 @@ class Records extends React.Component {
             <li key={"li" + i} onClick={this.nameList}>
               {c}
             </li>
-          ))
+          )),
         });
       })
-      .catch(err => console.log(err, "566666666"));
+      .catch(err => console.log(err));
   }
-  prediction = name => {
+  prediction = (name) => {
     try {
-      return this.state.customersNames.filter(c =>
+      return this.state.customersNames.filter((c) =>
         c.props.children.includes(name)
       );
     } catch (e) {
@@ -147,7 +136,7 @@ class Records extends React.Component {
           ) : null}
 
           <button
-            onClick={event => {
+            onClick={(event) => {
               event.preventDefault();
               this.search();
             }}
@@ -204,7 +193,7 @@ class Records extends React.Component {
               id='note'
               onChange={({ target }) => {
                 this.setState({
-                  info: { ...this.state.info, note: target.value }
+                  info: { ...this.state.info, note: target.value },
                 });
               }}
               value={this.state.info.note}
@@ -218,11 +207,11 @@ class Records extends React.Component {
                   console.log("saved");
                   axios
                     .post("/api/setNote", { ...this.state.info })
-                    .then(response => {
+                    .then((response) => {
                       if (response.status === 200) console.log("done");
                       else console.log("err");
                     })
-                    .catch(error => {
+                    .catch((error) => {
                       console.log(error);
                     });
                   target.innerText = "تعديل الملاحظات";
@@ -230,13 +219,12 @@ class Records extends React.Component {
                   target.innerText = "حفظ التعديلات";
                 }
 
-                // console.log(target.innerText, "00000001");
                 document.getElementById(
                   "note"
                 ).style.visibility = this.state.editNote;
                 this.setState({
                   editNote:
-                    this.state.editNote === "hidden" ? "unset" : "hidden"
+                    this.state.editNote === "hidden" ? "unset" : "hidden",
                 });
               }}
             >

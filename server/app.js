@@ -9,7 +9,6 @@ app.use(express.static(path.join(__dirname, "..", "client", "build")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use((req, res, next) => {
-  console.log(req.url, "55555555555555");
   res.header("Access-Control-Allow-Origin", "*");
   next();
 });

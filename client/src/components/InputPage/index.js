@@ -36,7 +36,7 @@ class Records extends React.Component {
           ? "0" + new Date().getDate()
           : new Date().getDate()),
       branchNo: 1,
-      customerName: null
+      customerName: null,
     },
     recordsInfo: {
       description: null,
@@ -62,8 +62,8 @@ class Records extends React.Component {
           ? "0" + new Date().getDate()
           : new Date().getDate()),
       branchNo: 1,
-      customerName: null
-    }
+      customerName: null,
+    },
   };
   componentDidMount() {
     this.setState({
@@ -76,7 +76,7 @@ class Records extends React.Component {
         "-" +
         (new Date().getDate() < 10
           ? "0" + new Date().getDate()
-          : new Date().getDate())
+          : new Date().getDate()),
     });
 
     axios
@@ -87,19 +87,19 @@ class Records extends React.Component {
             <li key={"li" + i} onClick={this.nameList}>
               {c}
             </li>
-          ))
+          )),
         });
       })
-      .catch(err => console.log(err, "566666666"));
+      .catch((err) => console.log(err, "566666666"));
   }
   updateInput = ({ target }) => {
     this.setState({
-      recordInfo: { ...this.state.recordInfo, [target.name]: target.value }
+      recordInfo: { ...this.state.recordInfo, [target.name]: target.value },
     });
   };
   updateInput2 = ({ target }) => {
     this.setState({
-      recordsInfo: { ...this.state.recordsInfo, [target.name]: target.value }
+      recordsInfo: { ...this.state.recordsInfo, [target.name]: target.value },
     });
   };
   getData = () => {
@@ -108,9 +108,8 @@ class Records extends React.Component {
         `/api/getRecords/${this.state.recordsInfo.fromDate}/${this.state.recordsInfo.toDate}`
       )
       .then(({ data }) => {
-        console.log(data, "2222222222222222");
         this.setState({
-          records: data.map(record => {
+          records: data.map((record) => {
             return (
               <tr>
                 <th style={{ border: "2px solid" }}>{record.customer_name}</th>
@@ -122,19 +121,12 @@ class Records extends React.Component {
                 </th>
               </tr>
             );
-          })
+          }),
         });
       })
-      .catch(err =>
-        console.log(
-          "0000000000000000000000000000",
-          err,
-          "000000000000000000000"
-        )
-      );
+      .catch((err) => console.log(err));
   };
   render() {
-    console.log(this.state);
     return (
       <div className='inputPage'>
         <form style={{ direction: "rtl" }}>
@@ -210,23 +202,22 @@ class Records extends React.Component {
             style={{ margin: "auto0", display: "block", width: "200px" }}
             type='submit'
             value='ادخال'
-            onClick={target => {
+            onClick={(target) => {
               target.preventDefault();
 
               axios
                 .post("/api/addRecord", { ...this.state.recordInfo })
-                .then(response => {
+                .then((response) => {
                   this.setState({
                     recordInfo: {
                       ...this.state.recordInfo,
                       customerName: "",
                       amount: "",
-                      description: ""
-                    }
+                      description: "",
+                    },
                   });
-                  console.log(response, "00000000000000000000");
                 })
-                .catch(error => {
+                .catch((error) => {
                   console.log(error);
                 });
             }}
@@ -258,7 +249,7 @@ class Records extends React.Component {
           <input
             type='submit'
             value='getRecords'
-            onClick={target => {
+            onClick={(target) => {
               target.preventDefault();
               this.getData();
             }}
