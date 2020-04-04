@@ -12,7 +12,7 @@ class Records extends React.Component {
       email: "",
       type: 1,
       password: null,
-      img: null
+      img: null,
     },
     customers: [],
     allCustomers: [],
@@ -21,8 +21,8 @@ class Records extends React.Component {
       name: "",
       phone: "",
       note: "",
-      email: ""
-    }
+      email: "",
+    },
     // info: { name: "Loading", phone: "", note: "" },
     // customersNames: [],
     // editNote: "hidden",
@@ -38,13 +38,13 @@ class Records extends React.Component {
       .get("/api/getAllCustomers")
       .then(({ data }) => {
         this.setState({
-          allCustomers: data.map(customerInfo => {
+          allCustomers: data.map((customerInfo) => {
             return (
               <tr
                 id={customerInfo.id}
                 onClick={() => {
                   this.setState({
-                    newCustomer: customerInfo
+                    newCustomer: customerInfo,
                   });
                 }}
               >
@@ -54,7 +54,7 @@ class Records extends React.Component {
                 <th style={{ border: "2px solid" }}>{customerInfo.phone}</th>
               </tr>
             );
-          })
+          }),
         });
 
         this.setState({
@@ -62,23 +62,22 @@ class Records extends React.Component {
             <li key={"li" + i} onClick={this.nameList}>
               {c}
             </li>
-          ))
+          )),
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
   updateInput = ({ target }) => {
     this.setState({
-      newCustomer: { ...this.state.newCustomer, [target.name]: target.value }
+      newCustomer: { ...this.state.newCustomer, [target.name]: target.value },
     });
   };
   updateInput2 = ({ target }) => {
     this.setState({
-      search: { ...this.state.search, [target.name]: target.value }
+      search: { ...this.state.search, [target.name]: target.value },
     });
   };
   render() {
-    console.log(this.state.newCustomer);
     return (
       <div className='inputPage'>
         <form style={{ direction: "rtl" }}>
@@ -138,11 +137,11 @@ class Records extends React.Component {
             style={{ margin: "auto0", display: "block", width: "200px" }}
             type='submit'
             value='ادخال'
-            onClick={target => {
+            onClick={(target) => {
               target.preventDefault();
               axios
                 .post("/api/addCustomer", { ...this.state.newCustomer })
-                .then(response => {
+                .then((response) => {
                   this.setState({
                     newCustomer: {
                       name: "",
@@ -151,12 +150,12 @@ class Records extends React.Component {
                       email: "",
                       type: 1,
                       password: null,
-                      img: null
-                    }
+                      img: null,
+                    },
                     // st@ff2020 YDRC Staff
                   });
                 })
-                .catch(error => {
+                .catch((error) => {
                   console.log(error);
                 });
             }}
@@ -206,7 +205,7 @@ class Records extends React.Component {
           <input
             type='submit'
             value='getCustomers'
-            onClick={target => {
+            onClick={(target) => {
               target.preventDefault();
               this.setState({ show: true });
             }}
@@ -229,30 +228,20 @@ class Records extends React.Component {
                     props: {
                       children: [
                         {
-                          props: { children: name }
+                          props: { children: name },
                         },
                         {
-                          props: { children: email }
+                          props: { children: email },
                         },
                         {
-                          props: { children: note }
+                          props: { children: note },
                         },
                         {
-                          props: { children: phone }
-                        }
-                      ]
-                    }
+                          props: { children: phone },
+                        },
+                      ],
+                    },
                   }) => {
-                    // console.log(
-                    //   name,
-                    //   "email:",
-                    //   email,
-                    //   "note",
-                    //   note,
-                    //   phone,
-                    //   name.includes(this.state.search.name) &&
-                    //     (email ? email.includes(this.state.search.email) : true)
-                    // );
                     return (
                       name.includes(this.state.search.name) &&
                       (email
