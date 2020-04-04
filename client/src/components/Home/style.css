@@ -1,0 +1,20 @@
+/* .input__input {
+  padding-right: 10px;
+  font-size: 1.13em;
+  text-align: right;
+}
+.Customers__input {
+  padding-right: 10px;
+  font-size: 1.5em;
+  text-align: right;
+} */
+
+input {
+  height: 30px !important;
+}
+input[type="submit"] {
+  height: 36px !important;
+}
+button {
+  height: 36px !important;
+}

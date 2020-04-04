@@ -14,7 +14,6 @@ const getRecords = (req, res) => {
     .then(data => {
       getCustomerInformationQuery(req.params.customerName)
         .then(info2 => {
-          console.log(info);
           return res.json({ data, info2: info2[0] });
         })
         .catch(err =>
