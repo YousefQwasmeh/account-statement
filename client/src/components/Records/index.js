@@ -55,7 +55,7 @@ class Records extends React.Component {
 
           return (
             <tr>
-              <th style={{ border: "2px solid" }}>{record.note}</th>
+              <th style={{ border: "2px solid" }}>{record.note||record.description}</th>
               <th style={{ border: "2px solid" }}>
                 {record.date.split("T")[0]}
               </th>
