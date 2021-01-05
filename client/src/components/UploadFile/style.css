@@ -1,0 +1,106 @@
+.upload-form {
+  margin: auto;
+  width: 50%;
+  min-width: 330px;
+}
+.upload-div {
+  border: 4px dashed #fff;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.upload-form .img-message {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.upload-form h3 {
+  background: #16a085dd;
+  padding: 3px 27px;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: xx-large;
+}
+.excel-img {
+  position: absolute;
+  height: 50vh;
+  z-index: -1;
+}
+.upload-form input {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  opacity: 0;
+  left: 0;
+}
+.upload-form button {
+  color: #fff;
+  background: #16a085;
+  border: none;
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+
+  border-radius: 4px;
+  border-bottom: 4px solid #117a60;
+  transition: all 0.2s ease;
+  outline: none;
+}
+.upload-form button:hover {
+  background: #149174;
+  color: #0c5645;
+}
+.upload-form button:active {
+  border: 0;
+}
+.upload-radio-buttons {
+  margin-top: 10px;
+  color: #fff;
+}
+.upload-radio-label {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.upload-radio-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+.upload-radio-label:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+.upload-radio-label .checked-label {
+  background-color: #2196f3 !important;
+}
+.upload-radio-label .dot {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #fff;
+}
