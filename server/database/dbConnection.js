@@ -24,4 +24,4 @@ const dbConnection = {
     ssl: !connectionString[2021].includes("localhost"),
   }),
 };
-module.exports = (year) => dbConnection[year];
+module.exports = (year = 2021) => dbConnection[year];
