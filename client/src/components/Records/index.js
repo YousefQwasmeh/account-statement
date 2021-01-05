@@ -16,7 +16,7 @@ class Records extends React.Component {
       (new Date().getDate() < 10
         ? "0" + new Date().getDate()
         : new Date().getDate()),
-    info: { name: "Loading", total: "loading", phone: "", description: "" },
+    info: { name: "Loading", total: "loading", phone: "", note: "" },
     preTotal: null,
     endDate: null,
     customersNames: [],
@@ -55,13 +55,18 @@ class Records extends React.Component {
 
           return (
             <tr>
-              <th style={{ border: "2px solid" }}>{record.note}</th>
-              <th style={{ border: "2px solid" }}>
-                {record.date.split("T")[0]}
+              <th className='th'>{record.description}</th>
+              <th className='th'>{record.date.split("T")[0]}</th>
+              <th
+                className='th'
+                style={{
+                  background: amount2 ? "red" : "",
+                }}
+              >
+                {amount2}
               </th>
-              <th style={{ border: "2px solid" }}>{amount2}</th>
-              <th style={{ border: "2px solid" }}>{amount}</th>
-              <th style={{ border: "2px solid" }}>{a}</th>
+              <th className='th'>{amount}</th>
+              <th className='th'>{a}</th>
               {/* <th style={{ border: "2px solid" }}>{record.customer_name}</th> */}
               {/* <th>{record.customer_name}</th> */}
             </tr>
@@ -90,7 +95,6 @@ class Records extends React.Component {
     axios
       .get("/api/getAllCustomers")
       .then(({ data }) => {
-        console.log(data[0]);
         this.setState({
           customersNames: data.map(({ name }, i) => (
             <li key={"li" + i} onClick={this.nameList}>
@@ -99,7 +103,7 @@ class Records extends React.Component {
           )),
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
   prediction = (name) => {
     try {
@@ -246,11 +250,11 @@ class Records extends React.Component {
               </thead>
               <tbody>
                 <tr>
-                  <th style={{ border: "2px solid" }}>رصيد سابق</th>
-                  <th style={{ border: "2px solid" }}>{this.state.fromDate}</th>
-                  <th style={{ border: "2px solid" }}></th>
-                  <th style={{ border: "2px solid" }}></th>
-                  <th style={{ border: "2px solid" }}>{this.state.preTotal}</th>
+                  <th className='th'>رصيد سابق</th>
+                  <th className='th'>{this.state.fromDate}</th>
+                  <th className='th'></th>
+                  <th className='th'></th>
+                  <th className='th'>{this.state.preTotal}</th>
                   {/* <th style={{ border: "2px solid" }}>{"name"}</th> */}
                   {/* <th>{record.customer_name}</th> */}
                 </tr>
