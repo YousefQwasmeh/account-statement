@@ -1,20 +1,19 @@
 const dbConnection = require("../dbConnection");
-const dbConnection2019 = require("../dbConnection2019");
-const getRecords = (customerName, branch) => {
-  return dbConnection
+const getRecords = (customerName, branch = 1) => {
+  return dbConnection()
     .query(
       `SELECT * FROM record where customer_name = $1 and branch = $2 ORDER BY date `,
-      [customerName, branch || 1]
+      [customerName, branch]
     )
-    .then(res =>
-      dbConnection2019
+    .then((res) =>
+      dbConnection("2019+2020")
         .query(
           `SELECT * FROM record where customer_name = $1 and branch = $2 ORDER BY date `,
-          [customerName, branch || 1]
+          [customerName, branch]
         )
-        .then(res2019 => res2019.rows.concat(res.rows))
-        .catch(err2019 => err2019)
+        .then((res2) => [...res.rows, ...res2.rows])
+        .catch((err2) => res.rows)
     )
-    .catch(err => err);
+    .catch((err) => err);
 };
 module.exports = getRecords;

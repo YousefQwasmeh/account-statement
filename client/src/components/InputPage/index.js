@@ -90,7 +90,7 @@ class Records extends React.Component {
           )),
         });
       })
-      .catch((err) => console.log(err, "566666666"));
+      .catch((err) => console.log(err));
   }
   updateInput = ({ target }) => {
     this.setState({

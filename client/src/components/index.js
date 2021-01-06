@@ -4,6 +4,7 @@ import Records from "./Records";
 import InputPage from "./InputPage";
 import Home from "./Home";
 import Customers from "./Customers";
+import UploadFile from "./UploadFile";
 
 const Routes = () => {
   return (
@@ -13,6 +14,7 @@ const Routes = () => {
         <Route exact path='/input' component={InputPage} />
         <Route exact path='/records' component={Records} />
         <Route exact path='/customers' component={Customers} />
+        <Route exact path='/upload' component={UploadFile} />
         {/* <Route exact path='/records' component={Records} /> */}
         {/* <Route component={NotFound} /> */}
       </Switch>

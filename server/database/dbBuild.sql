@@ -22,10 +22,7 @@ create table record
   amount FLOAT,
   description text,
   branch int2 not NULL,
-  customer_name varchar(100),
-  FOREIGN KEY
-  (customer_name) REFERENCES customer
-  (name)
+  customer_name varchar(100)
 );
 
 create table customer_account

@@ -9,12 +9,12 @@
   text-align: right;
 } */
 
-input {
+.list-buttons input {
   height: 30px !important;
 }
-input[type="submit"] {
+.list-buttons input[type="submit"] {
   height: 36px !important;
 }
-button {
+.list-buttons button {
   height: 36px !important;
 }
