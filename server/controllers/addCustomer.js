@@ -7,7 +7,7 @@ const addCustomer = (req, res) => {
       if (req.body) return res.json(data);
     })
     .catch((err) => {
-      console.log("err:" + req.i, req.customerInfo);
+      console.log("err:" + req.i, req.customerInfo, req.body, "\n", err);
       if (req.body)
         res.status(500).json({ err: "err for addCustomer controller" });
     });

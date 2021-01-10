@@ -5,6 +5,7 @@ const getRecords = require("./getRecords");
 const getAllCustomers = require("./getAllCustomers");
 const updateNote = require("./updateNote");
 const addRecord = require("./addRecord");
+const addCustomer = require("./addCustomer");
 const getRecords2 = require("./getRecords2");
 const readExcel = require("./readExcel");
 
@@ -13,6 +14,7 @@ router.get("/records/:customerName", getRecords);
 router.get("/getAllCustomers", getAllCustomers);
 router.post("/setNote", updateNote);
 router.post("/addRecord", addRecord);
+router.post("/addCustomer", addCustomer);
 router.get("/getRecords/:fromDate/:toDate", getRecords2);
 router.post("/upload", readExcel);
 
