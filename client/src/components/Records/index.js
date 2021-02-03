@@ -5,7 +5,7 @@ class Records extends React.Component {
   state = {
     customerName: "",
     records: [],
-    fromDate: "2019-01-01",
+    fromDate: "2020-01-01",
     toDate:
       new Date().getFullYear() +
       "-" +
