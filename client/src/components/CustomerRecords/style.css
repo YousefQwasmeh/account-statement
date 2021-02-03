@@ -1,0 +1,12 @@
+.info {
+  text-align: right;
+  font-size: 1.13em;
+}
+.recordPage input {
+  font-size: 1.13em;
+  padding-right: 10px;
+  text-align: right;
+}
+.th {
+  border: 2px solid;
+}
