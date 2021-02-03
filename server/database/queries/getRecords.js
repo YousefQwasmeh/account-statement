@@ -11,7 +11,7 @@ const getRecords = (customerName, branch = 1) => {
           `SELECT * FROM record where customer_name = $1 and branch = $2 ORDER BY date `,
           [customerName, branch]
         )
-        .then((res2) => [...res.rows, ...res2.rows])
+        .then((res2) => [...res2.rows, ...res.rows])
         .catch((err2) => res.rows)
     )
     .catch((err) => err);

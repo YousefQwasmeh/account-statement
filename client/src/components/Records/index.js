@@ -5,7 +5,7 @@ class Records extends React.Component {
   state = {
     customerName: "",
     records: [],
-    fromDate: "2019-01-01",
+    fromDate: "2020-01-01",
     toDate:
       new Date().getFullYear() +
       "-" +
@@ -181,7 +181,7 @@ class Records extends React.Component {
         <br />
         {this.state.info.name === "Loading" ? null : (
           <div className='info'>
-            الاسم: {this.state.info.name}
+            الاسم: <span onClick={this.nameList}>{this.state.info.name}</span>
             <br />
             الرصيد الكلي حتى تاريخ {this.state.endDate}:
             &nbsp;&nbsp;&nbsp;&nbsp;
