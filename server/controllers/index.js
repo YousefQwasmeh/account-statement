@@ -8,9 +8,11 @@ const addRecord = require("./addRecord");
 const addCustomer = require("./addCustomer");
 const getRecords2 = require("./getRecords2");
 const readExcel = require("./readExcel");
+const getRecordsUrl = require("./getRecordsUrl");
 
 router.get("/records/:customerName/:branch", getRecords);
 router.get("/records/:customerName", getRecords);
+router.get("/getRecordsUrl/:customerUrl", getRecordsUrl);
 router.get("/getAllCustomers", getAllCustomers);
 router.post("/setNote", updateNote);
 router.post("/addRecord", addRecord);

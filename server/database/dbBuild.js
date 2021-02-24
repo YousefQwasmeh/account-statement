@@ -13,9 +13,15 @@ const dbBuild = (year = 2021) => {
         .then((res2) => {
           console.log("data inserted successfully");
         })
-        .catch((err) => console.log(err, "insert data is failed"));
+        .catch((err) => {
+          console.log(err, "insert data is failed");
+          throw err;
+        });
     })
-    .catch((err) => console.log(err, "create database is failed"));
+    .catch((err) => {
+      console.log(err, "create database is failed");
+      throw err;
+    });
 };
 module.exports = dbBuild;
 // dbBuild();

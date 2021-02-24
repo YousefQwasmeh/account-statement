@@ -8,7 +8,7 @@ const readExcel = async (req, res) => {
   upload(req, res, async (err) => {
     const year = req.body.year;
     if (err) {
-      res.status(500).json({ err: "err can't upload Excel." });
+      return res.status(500).json({ err: "err can't upload Excel." });
     } else {
       let wb;
       let ws;
@@ -16,10 +16,14 @@ const readExcel = async (req, res) => {
         wb = xlsx.read(req.file.buffer, { cellDates: true });
         ws = wb.Sheets[wb.SheetNames[0]];
       } catch (e) {
-        res.status(500).json({ err: "err can't read Excel file." });
+        return res.status(500).json({ err: "err can't read Excel file." });
       }
-      await dbBuild(year);
-
+      try {
+        await dbBuild(year);
+      } catch (e) {
+        console.log(e, "readExcel.js await dbBuild: " + year);
+        return res.status(500).json({ err: "err can't reBuild DB." });
+      }
       for (let i = 4; i < 26000; ++i) {
         try {
           if (ws["A" + i] && ws["A" + i]["v"]) {
