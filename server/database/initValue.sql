@@ -13,15 +13,14 @@ BEGIN;
         ('يوسف القواسمي', '2حليب', '11/10/2019', 7.5, 2),
         ('يوسف القواسمي', '2خبز', '11/20/2019', 4, 2)
     ;
-
-    INSERT INTO customer_url
-        (url, customer_name)
-    VALUES
-        ('dA0h5c1', 'يوسف القواسمي'),
-        ('1u6LaQp', 'يوسف القواسمي 2');
-
+    
     COMMIT;
 
+   -- INSERT INTO customer_url
+    --     (url, customer_name)
+    -- VALUES
+    --     ('dA0h5c1', 'يوسف القواسمي'),
+    --     ('1u6LaQp', 'يوسف القواسمي 2');
 
 
 -- BEGIN;

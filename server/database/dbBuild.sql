@@ -33,7 +33,7 @@ create table customer_account
 (customer_id) REFERENCES customer (id)
 );
 
-create table customer_url
+CREATE TABLE IF NOT EXISTS customer_url
 (
   url varchar(7) primary key,
   customer_name varchar(100) unique
